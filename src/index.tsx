@@ -11,6 +11,7 @@ export interface TagsInputProps {
   placeHolder?: string;
   value?: string[];
   onChange?: (tags: string[]) => void;
+  onFocus?: any;
   onBlur?: any;
   separators?: string[];
   disableBackspaceRemove?: boolean;
@@ -33,6 +34,7 @@ export const TagsInput = ({
   placeHolder,
   value,
   onChange,
+  onFocus,
   onBlur,
   separators,
   disableBackspaceRemove,
@@ -107,6 +109,7 @@ export const TagsInput = ({
         name={name}
         placeholder={placeHolder}
         onKeyDown={handleOnKeyUp}
+        onFocus={onFocus}
         onBlur={onBlur}
         disabled={disabled}
         onKeyUp={onKeyUp}
