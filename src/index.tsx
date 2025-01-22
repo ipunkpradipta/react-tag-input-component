@@ -11,7 +11,7 @@ export interface TagsInputProps {
   placeHolder?: string;
   value?: string[];
   onChange?: (tags: string[]) => void;
-  onBlur?: any;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   separators?: string[];
   disableBackspaceRemove?: boolean;
   onExisting?: (tag: string) => void;
@@ -24,6 +24,9 @@ export interface TagsInputProps {
     input?: string;
     tag?: string;
   };
+  addTagOnPaste?: boolean;
+  required?: boolean;
+  // onPaste?: (e: React.ClipboardEvent<HTMLInputElement>) => void;
 }
 
 const defaultSeparators = ["Enter"];
@@ -43,8 +46,11 @@ export const TagsInput = ({
   beforeAddValidate,
   onKeyUp,
   classNames,
+  addTagOnPaste = false,
+  required = false,
+  // onPaste,
 }: TagsInputProps) => {
-  const [tags, setTags] = useState<any>(value || []);
+  const [tags, setTags] = useState<string[]>(value || []);
 
   useDidUpdateEffect(() => {
     onChange && onChange(tags);
@@ -52,7 +58,7 @@ export const TagsInput = ({
 
   useDidUpdateEffect(() => {
     if (JSON.stringify(value) !== JSON.stringify(tags)) {
-      setTags(value);
+      setTags(value as string[]);
     }
   }, [value]);
 
@@ -89,6 +95,16 @@ export const TagsInput = ({
     onRemoved && onRemoved(text);
   };
 
+  const onPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const text = e.clipboardData.getData("text");
+    if (tags.includes(text)) {
+      onExisting && onExisting(text);
+      return;
+    }
+    setTags([...tags, text]);
+  };
+
   return (
     <div aria-labelledby={name} className="rti--container">
       {tags.map(tag => (
@@ -110,6 +126,8 @@ export const TagsInput = ({
         onBlur={onBlur}
         disabled={disabled}
         onKeyUp={onKeyUp}
+        onPaste={addTagOnPaste ? onPaste : undefined}
+        required={required}
       />
     </div>
   );

@@ -1,5 +1,8 @@
 # react-tag-input-component
 
+base from [react-tag-input-component](https://github.com/hc-oss/react-tag-input-component.git)
+
+
 lightweight component for tag(s) input
 
 [![GitHub Actions Status](https://github.com/harshzalavadiya/react-tag-input-component/workflows/CI/badge.svg)](https://github.com/harshzalavadiya/react-tag-input-component/actions)
@@ -70,6 +73,8 @@ export default Example;
 | `onRemoved`         | on tag removed callback                                                         | `(tag: string) => void`                            |                 |
 | `beforeAddValidate` | Custom validation before adding tag                                             | `(tag: string, existingTags: string[]) => boolean` |                 |
 | `isEditOnRemove`    | Remove the tag but keep the word in the input to edit it on using Backscape Key | `boolean`                                          | `false`         |
+| `addTagOnPaste`| Automatically add tag on paste | `boolean` | `false` |
+| `required`| Make the input required | `boolean` | `false` |
 
 ## 💅 Themeing
 

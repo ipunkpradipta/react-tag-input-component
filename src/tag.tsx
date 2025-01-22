@@ -3,7 +3,7 @@ import cc from "./classnames";
 
 interface TagProps {
   text: string;
-  remove: any;
+  remove: (text: string) => void;
   disabled?: boolean;
   className?: string;
 }
