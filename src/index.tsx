@@ -53,7 +53,10 @@ export const TagsInput = ({
   const [tags, setTags] = useState<string[]>(value || []);
 
   useDidUpdateEffect(() => {
-    onChange && onChange(tags);
+    // onChange && onChange(tags);
+    if(onChange) {
+      onChange(tags);
+    }
   }, [tags]);
 
   useDidUpdateEffect(() => {
@@ -82,7 +85,10 @@ export const TagsInput = ({
       if (beforeAddValidate && !beforeAddValidate(text, tags)) return;
 
       if (tags.includes(text)) {
-        onExisting && onExisting(text);
+        // onExisting && onExisting(text);
+        if (onExisting) {
+          onExisting(text);
+        }
         return;
       }
       setTags([...tags, text]);
@@ -92,14 +98,19 @@ export const TagsInput = ({
 
   const onTagRemove = text => {
     setTags(tags.filter(tag => tag !== text));
-    onRemoved && onRemoved(text);
+    // onRemoved && onRemoved(text);
+    if (onRemoved) {
+      onRemoved(text);
+    }
   };
 
   const onPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const text = e.clipboardData.getData("text");
     if (tags.includes(text)) {
-      onExisting && onExisting(text);
+      if(onExisting) {
+        onExisting(text);
+      }
       return;
     }
     setTags([...tags, text]);
